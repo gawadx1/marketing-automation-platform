@@ -82,6 +82,30 @@ class Settings(BaseSettings):
     SIMULATED_API_DELAY_MAX: float = 0.2
     MOCK_DATA_SEED: int = 42
 
+    # Google Ads API
+    GOOGLE_ADS_CLIENT_ID: Optional[str] = None
+    GOOGLE_ADS_CLIENT_SECRET: Optional[str] = None
+    GOOGLE_ADS_REFRESH_TOKEN: Optional[str] = None
+    GOOGLE_ADS_DEVELOPER_TOKEN: Optional[str] = None
+    GOOGLE_ADS_LOGIN_CUSTOMER_ID: Optional[str] = None
+
+    # Meta Ads API
+    META_ADS_ACCESS_TOKEN: Optional[str] = None
+    META_ADS_AD_ACCOUNT_ID: Optional[str] = None
+    META_ADS_APP_ID: Optional[str] = None
+    META_ADS_APP_SECRET: Optional[str] = None
+
+    # HubSpot CRM API
+    HUBSPOT_ACCESS_TOKEN: Optional[str] = None
+
+    # Mailchimp API
+    MAILCHIMP_API_KEY: Optional[str] = None
+    MAILCHIMP_SERVER_PREFIX: Optional[str] = None
+
+    # Google Analytics Data API
+    GOOGLE_ANALYTICS_CREDENTIALS_JSON: Optional[str] = None
+    GOOGLE_ANALYTICS_PROPERTY_ID: Optional[str] = None
+
     LOG_LEVEL: str = Field(default="INFO", validate_default=True)
     LOG_FORMAT: str = "{time:YYYY-MM-DD HH:mm:ss.SSS} | {level:<7} | {name}:{function}:{line} | {message}"
     LOG_JSON_FORMAT: bool = False
