@@ -10,8 +10,6 @@ settings = get_settings()
 class GoogleAdsService:
     def __init__(self):
         self.base_url = "https://googleads.googleapis.com/v15"
-        self.mock_seed = settings.MOCK_DATA_SEED
-        random.seed(self.mock_seed)
 
     async def _simulate_delay(self):
         delay = random.uniform(
@@ -31,12 +29,8 @@ class GoogleAdsService:
                 "status": random.choice(statuses),
                 "type": p,
                 "budget": round(random.uniform(500, 50000), 2),
-                "start_date": (
-                    datetime.now() - timedelta(days=random.randint(1, 90))
-                ).strftime("%Y-%m-%d"),
-                "end_date": (
-                    datetime.now() + timedelta(days=random.randint(1, 30))
-                ).strftime("%Y-%m-%d")
+                "start_date": (datetime.now() - timedelta(days=random.randint(1, 90))).strftime("%Y-%m-%d"),
+                "end_date": (datetime.now() + timedelta(days=random.randint(1, 30))).strftime("%Y-%m-%d")
                 if random.random() > 0.3
                 else None,
                 "customer_id": customer_id,
@@ -44,9 +38,7 @@ class GoogleAdsService:
             for i, p in enumerate(platforms, 1)
         ]
 
-    async def get_campaign_stats(
-        self, campaign_id: str, start_date: str = None, end_date: str = None
-    ) -> dict:
+    async def get_campaign_stats(self, campaign_id: str, start_date: str = None, end_date: str = None) -> dict:
         await self._simulate_delay()
         impressions = random.randint(1000, 100000)
         clicks = random.randint(int(impressions * 0.01), int(impressions * 0.1))
@@ -61,9 +53,7 @@ class GoogleAdsService:
             "cost": cost,
             "average_cpc": round(cost / clicks, 2) if clicks > 0 else 0,
             "ctr": round(clicks / impressions * 100, 2) if impressions > 0 else 0,
-            "conversion_rate": round(conversions / clicks * 100, 2)
-            if clicks > 0
-            else 0,
+            "conversion_rate": round(conversions / clicks * 100, 2) if clicks > 0 else 0,
             "average_position": round(random.uniform(1.0, 5.0), 1),
             "quality_score": random.randint(5, 10),
             "date_range": {"start": start_date, "end": end_date},

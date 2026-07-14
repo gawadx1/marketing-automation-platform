@@ -10,8 +10,6 @@ settings = get_settings()
 class GoogleAnalyticsService:
     def __init__(self):
         self.base_url = "https://analyticsdata.googleapis.com/v1beta"
-        self.mock_seed = settings.MOCK_DATA_SEED
-        random.seed(self.mock_seed)
 
     async def _simulate_delay(self):
         delay = random.uniform(
@@ -59,9 +57,7 @@ class GoogleAnalyticsService:
 
         total_users = random.randint(1000, 50000)
         total_sessions = random.randint(int(total_users * 1.2), int(total_users * 3))
-        total_pageviews = random.randint(
-            int(total_sessions * 2), int(total_sessions * 5)
-        )
+        total_pageviews = random.randint(int(total_sessions * 2), int(total_sessions * 5))
 
         return {
             "property_id": property_id,
@@ -72,16 +68,8 @@ class GoogleAnalyticsService:
                         str(total_users),
                         str(total_sessions),
                         str(total_pageviews),
-                        str(
-                            round(total_sessions / total_users, 2)
-                            if total_users > 0
-                            else 0
-                        ),
-                        str(
-                            round(total_pageviews / total_sessions, 2)
-                            if total_sessions > 0
-                            else 0
-                        ),
+                        str(round(total_sessions / total_users, 2) if total_users > 0 else 0),
+                        str(round(total_pageviews / total_sessions, 2) if total_sessions > 0 else 0),
                         str(round(random.uniform(1, 10), 2)),
                         str(round(random.uniform(30, 300), 2)),
                     ]
@@ -98,9 +86,7 @@ class GoogleAnalyticsService:
             ],
         }
 
-    async def get_acquisition_channels(
-        self, property_id: str = "123456789"
-    ) -> list[dict]:
+    async def get_acquisition_channels(self, property_id: str = "123456789") -> list[dict]:
         await self._simulate_delay()
         channels = [
             "Organic Search",

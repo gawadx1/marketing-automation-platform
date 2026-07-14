@@ -9,8 +9,6 @@ settings = get_settings()
 class HubSpotService:
     def __init__(self):
         self.base_url = "https://api.hubapi.com/crm/v3"
-        self.mock_seed = settings.MOCK_DATA_SEED
-        random.seed(self.mock_seed)
 
     async def _simulate_delay(self):
         delay = random.uniform(
@@ -82,17 +80,11 @@ class HubSpotService:
                         "company": random.choice(self.COMPANIES),
                         "city": random.choice(self.CITIES),
                         "country": random.choice(self.COUNTRIES),
-                        "hs_lead_status": random.choice(
-                            ["NEW", "OPEN", "IN_PROGRESS", "CONNECTED", "CLOSED"]
-                        ),
-                        "createdate": (
-                            datetime.now() - timedelta(days=random.randint(1, 365))
-                        ).isoformat(),
+                        "hs_lead_status": random.choice(["NEW", "OPEN", "IN_PROGRESS", "CONNECTED", "CLOSED"]),
+                        "createdate": (datetime.now() - timedelta(days=random.randint(1, 365))).isoformat(),
                         "lastmodifieddate": datetime.now().isoformat(),
                     },
-                    "createdAt": (
-                        datetime.now() - timedelta(days=random.randint(1, 365))
-                    ).isoformat(),
+                    "createdAt": (datetime.now() - timedelta(days=random.randint(1, 365))).isoformat(),
                     "updatedAt": datetime.now().isoformat(),
                 }
             )
@@ -133,12 +125,8 @@ class HubSpotService:
                     "amount": str(round(random.uniform(1000, 100000), 2)),
                     "dealstage": random.choice(stages),
                     "pipeline": "default",
-                    "closedate": (
-                        datetime.now() + timedelta(days=random.randint(-30, 60))
-                    ).strftime("%Y-%m-%d"),
-                    "createdate": (
-                        datetime.now() - timedelta(days=random.randint(1, 180))
-                    ).isoformat(),
+                    "closedate": (datetime.now() + timedelta(days=random.randint(-30, 60))).strftime("%Y-%m-%d"),
+                    "createdate": (datetime.now() - timedelta(days=random.randint(1, 180))).isoformat(),
                 },
             }
             for i in range(1, limit + 1)
