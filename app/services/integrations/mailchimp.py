@@ -9,6 +9,8 @@ settings = get_settings()
 class MailchimpService:
     def __init__(self):
         self.base_url = "https://us21.api.mailchimp.com/3.0"
+        self.mock_seed = settings.MOCK_DATA_SEED
+        random.seed(self.mock_seed)
 
     async def _simulate_delay(self):
         delay = random.uniform(
@@ -52,7 +54,9 @@ class MailchimpService:
             },
         ]
 
-    async def add_member(self, list_id: str, email: str, first_name: str = "", last_name: str = "") -> dict:
+    async def add_member(
+        self, list_id: str, email: str, first_name: str = "", last_name: str = ""
+    ) -> dict:
         await self._simulate_delay()
         return {
             "id": f"member_{random.randint(100000, 999999)}",
@@ -70,7 +74,9 @@ class MailchimpService:
         await self._simulate_delay()
         return {"status": "archived", "email": email}
 
-    async def create_campaign(self, list_id: str, subject: str, content: str, title: str = "") -> dict:
+    async def create_campaign(
+        self, list_id: str, subject: str, content: str, title: str = ""
+    ) -> dict:
         await self._simulate_delay()
         return {
             "id": f"campaign_{random.randint(100000, 999999)}",
@@ -107,7 +113,9 @@ class MailchimpService:
             "open_rate": round(opens / emails_sent * 100, 2) if emails_sent > 0 else 0,
             "clicks": clicks,
             "unique_clicks": int(clicks * random.uniform(0.7, 0.9)),
-            "click_rate": round(clicks / emails_sent * 100, 2) if emails_sent > 0 else 0,
+            "click_rate": round(clicks / emails_sent * 100, 2)
+            if emails_sent > 0
+            else 0,
             "bounces": random.randint(0, int(emails_sent * 0.02)),
             "unsubscribes": random.randint(0, int(emails_sent * 0.01)),
         }

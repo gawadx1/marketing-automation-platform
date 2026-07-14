@@ -1,4 +1,4 @@
-.PHONY: help install dev build up down logs test lint clean migrate
+.PHONY: help install dev build up down logs test lint clean seed migrate
 
 help:
 	@echo "Marketing Automation Platform - Makefile"
@@ -12,6 +12,7 @@ help:
 	@echo "  make logs         View Docker logs"
 	@echo "  make test         Run tests"
 	@echo "  make lint         Run linting"
+	@echo "  make seed         Seed database with demo data"
 	@echo "  make migrate      Run database migrations"
 	@echo "  make shell        Open Python shell"
 	@echo ""
@@ -47,6 +48,9 @@ lint:
 format:
 	ruff format app/ tests/
 
+seed:
+	python -m app.seed_data
+
 migrate:
 	alembic upgrade head
 
@@ -60,11 +64,12 @@ shell:
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	find . -type f -name "*.pyc" -delete
+	find . -type f -name "*.pyo" -delete
 	find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true
-	rm -rf .pytest_cache logs/ *.log
+	rm -rf .pytest_cache .ruff_cache logs/ *.log
 
 docker-clean:
 	docker compose down -v
 	docker system prune -f
 
-.PHONY: help install dev build up up-prod down logs test lint format migrate migrate-new shell clean docker-clean
+.PHONY: help install dev build up up-prod down logs test lint format seed migrate migrate-new shell clean docker-clean

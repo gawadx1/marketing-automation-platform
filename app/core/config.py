@@ -80,6 +80,7 @@ class Settings(BaseSettings):
 
     SIMULATED_API_DELAY_MIN: float = 0.05
     SIMULATED_API_DELAY_MAX: float = 0.2
+    MOCK_DATA_SEED: int = 42
 
     LOG_LEVEL: str = Field(default="INFO", validate_default=True)
     LOG_FORMAT: str = "{time:YYYY-MM-DD HH:mm:ss.SSS} | {level:<7} | {name}:{function}:{line} | {message}"
